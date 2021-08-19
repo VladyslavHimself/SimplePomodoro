@@ -1,0 +1,14 @@
+.Logo {
+  &__heading {
+    font-size: 36px;
+  }
+
+  &__line {
+    margin: 15px 0px;
+    width: 300px;
+    height: 5px;
+    border: none;
+    background-color: #f4f4f4;
+    border-radius: 50px;
+  }
+}
