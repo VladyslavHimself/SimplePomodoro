@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Recursive:wght@300;400&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Recursive', sans-serif;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  text-align: center;
+  background-color: indianred;
+
+  color: #f4f4f4;
+}
+
+.Logo {
+  &__heading {
+    font-size: 36px;
+  }
+
+  &__line {
+    margin: 15px 0px;
+    width: 300px;
+    height: 5px;
+    border: none;
+    background-color: #f4f4f4;
+    border-radius: 50px;
+  }
+}
+
+.Timer {
+  &__display {
+    font-size: 48px;
+    margin-bottom: 25px;
+  }
+}
+
+.Controller {
+
+  display: flex;
+  text-align: center;
+
+  &__pause, &__resume, &__start {
+    margin: 0px 25px;
+
+    cursor: pointer;
+    transition: .7s ease;
+
+    // padding: 5px;
+    // border: 3px solid white;
+    // border-top: transparent;
+    // border-left: transparent;
+    // border-right: transparent;
+
+    &:hover:not(.Controller__start) {
+      color: rgba(255, 255, 255, .5);
+    }
+  }
+
+  &__pause {}
+  &__resume {}
+  &__start {
+
+    padding: 7px 10px;
+    border: 3px solid #f4f4f4;
+
+    color: #333;
+
+    background-color: #f4f4f4;
+
+    &:hover {
+      border: 3px solid #e2e2e2;
+      background-color: #e2e2e2;
+    }
+  }
+}
