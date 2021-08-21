@@ -8,8 +8,6 @@ const Timer = props => {
 
   const { seconds, minutes } = props.time;
 
-  console.log(seconds);
-
   const nullizeData = (count, minNumber) => {
     if (count <= minNumber) {
       return (`0${count}`)
@@ -17,16 +15,15 @@ const Timer = props => {
       return (count);
     }
   }
-
+  
   return (
     <div className={classes.Timer}>
       <div className={classes.Timer__display}>
-        <span>{nullizeData(minutes, 9)}:
-        {
-           
-        }{nullizeData(seconds, 9)}</span>
+        <span>
+          {nullizeData(minutes, 9)}:{nullizeData(seconds, 9)}
+        </span>
       </div>
-      <Controller onChange={ props.onChange } />
+      <Controller onChange={ props.onChange }/>
     </div>
   )
 }
