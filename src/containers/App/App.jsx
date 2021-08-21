@@ -10,8 +10,8 @@ export default class App extends React.Component {
   
   state = {
     timer: {
-      seconds: 4,
-      minutes: 0,
+      seconds: 0,
+      minutes: 20,
       isDone: false,
     }
   }
@@ -46,43 +46,50 @@ export default class App extends React.Component {
     }
   }
 
-  testFunc = () => {
-    console.log('22');
+  renewTime = () => {
     this.setState({
+      isDone: true,
       timer: {
-        seconds: 0,
         minutes: 20,
+        seconds: 0,
       }
     })
   }
 
+  pauseTime = () => {
+    console.log('I\'m done!');
+    this.setState({
+      isDone: true,
+    })
+  }
+
   startTimer = () => {
-    
     this.setState({
       isDone: false,
     })
 
     let timer = setInterval(() => {
-      // destructure const
-    const { seconds, minutes } = this.state.timer;
+      const { seconds, minutes } = this.state.timer;
+      let isTimerDone = this.isTimerFinished(minutes, seconds);
   
-    let isTimerDone = this.isTimerFinished(minutes, seconds);
-  
-    if (isTimerDone) {
-      this.setState({
-        isDone: true,
-      });
-    }
-  
-    if (this.state.isDone) {
-      clearInterval(timer);
-      return;
-    }
-  
-    this.timerTicking(minutes, seconds);
-  }, 1000);
+      if (isTimerDone) {
+        this.setState({
+          isDone: true,
+        });
+      }
+
+      if (this.state.isDone) {
+        clearInterval(timer);
+        return;
+      }
+
+      this.timerTicking(minutes, seconds);
+
+    }, 1000);
     
   }
+
+  
 
   render() {
     return (
@@ -92,6 +99,8 @@ export default class App extends React.Component {
           <Timer 
             time={ this.state.timer }
             onChange = { this.startTimer }
+            renewTime = { this.renewTime }
+            pauseTime = { this.pauseTime }
           />
         </div>
       </Layout>

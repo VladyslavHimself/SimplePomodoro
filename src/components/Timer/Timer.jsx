@@ -23,7 +23,11 @@ const Timer = props => {
           {nullizeData(minutes, 9)}:{nullizeData(seconds, 9)}
         </span>
       </div>
-      <Controller onChange={ props.onChange }/>
+      <Controller 
+        onChange={ props.onChange }
+        onRenewTime={ props.renewTime }
+        pauseTime = { props.pauseTime }
+      />
     </div>
   )
 }
