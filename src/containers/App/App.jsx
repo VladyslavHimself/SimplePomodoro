@@ -13,7 +13,7 @@ export default class App extends React.Component {
       minutes: 20,
       isPaused: false, // true/false if clicked on pause button
       isTimerStarted: false, // true, when click on 'Start timer' button
-      isTimerRenewed: false,
+      isTimerRenewed: false, 
   }
 
   isTimerFinished = (minutes, seconds) => {
@@ -76,7 +76,8 @@ export default class App extends React.Component {
         // NOTE Check if timer is not End;
         if (this.isTimerFinished(minutes, seconds)) {
           this.pauseTime();
-          // clearInterval(timer);
+          window.alert('Timer is done, you\'re great!');
+          this.renewTime();
           return;
         }
 
@@ -84,9 +85,7 @@ export default class App extends React.Component {
         this.timerTicking(minutes, seconds);
   
       }, 1000);
-    
-   
-    
+      
   }
 
   
