@@ -9,80 +9,87 @@ import Timer from '../../components/Timer/Timer'
 export default class App extends React.Component {
   
   state = {
-    timer: {
-      seconds: 4,
-      minutes: 0,
-      isDone: false,
-    }
+      seconds: 0,
+      minutes: 20,
+      isPaused: false, // true/false if clicked on pause button
+      isTimerStarted: false, // true, when click on 'Start timer' button
+      isTimerRenewed: false,
   }
 
-
-  
   isTimerFinished = (minutes, seconds) => {
     if (minutes === 0 && seconds === 0) return true;
   }
-
+  // updates seconds & minutes
   timerTicking = (minutes, seconds) => {
     if (seconds <= 0) {
-      let newMinutes = minutes - 1;
-      let newSeconds = 59;
-
       this.setState({
-        timer: {
-          seconds: newSeconds,
-          minutes: newMinutes,
-        }
-      })
+        seconds: 59,
+        minutes: minutes - 1,
+      });
     } else {
-      let newMinutes = minutes;
-      let newSeconds = seconds - 1;
-      
       this.setState({
-        timer: {
-          seconds: newSeconds,
-          minutes: newMinutes,
-        }
-      })
+          seconds: seconds - 1,
+          minutes: minutes,
+      });
     }
   }
 
-  testFunc = () => {
-    console.log('22');
+  pauseTime = () => {
     this.setState({
-      timer: {
-        seconds: 0,
-        minutes: 20,
-      }
+      isPaused: !this.state.isPaused,
+    })
+  }
+
+  renewTime = () => {
+    this.setState({
+      seconds: 0,
+      minutes: 20,
+      isPaused: false,
+      isTimerStarted: false,
+      isTimerRenewed: true,
     })
   }
 
   startTimer = () => {
-    
-    this.setState({
-      isDone: false,
-    })
 
-    let timer = setInterval(() => {
-      // destructure const
-    const { seconds, minutes } = this.state.timer;
+    console.log('timer started')
+    this.setState({
+      isTimerStarted: true,
+    });
+
+      let timer = setInterval(() => {
+        const { seconds, minutes } = this.state;
+
+         if (this.state.isTimerRenewed) {
+            console.log('renewed');
+           this.setState({
+             isTimerRenewed: false,
+           })
+           clearInterval(timer);
+           return;
+          //  return;
+         }
+        
+        // NOTE if timer paused - don't tick!
+        if (this.state.isPaused) return;
+
+        // NOTE Check if timer is not End;
+        if (this.isTimerFinished(minutes, seconds)) {
+          this.pauseTime();
+          // clearInterval(timer);
+          return;
+        }
+
+        // NOTE start timer ticking
+        this.timerTicking(minutes, seconds);
   
-    let isTimerDone = this.isTimerFinished(minutes, seconds);
-  
-    if (isTimerDone) {
-      this.setState({
-        isDone: true,
-      });
-    }
-  
-    if (this.state.isDone) {
-      clearInterval(timer);
-      return;
-    }
-  
-    this.timerTicking(minutes, seconds);
-  }, 1000);
+      }, 1000);
+    
+   
     
   }
+
+  
 
   render() {
     return (
@@ -90,8 +97,10 @@ export default class App extends React.Component {
         <div className={classes.App}>
           <Logo name='Pomodoro' />
           <Timer 
-            time={ this.state.timer }
-            onChange = { this.startTimer }
+            onChange   = { this.startTimer }
+            renewTime  = { this.renewTime  }
+            pauseTime  = { this.pauseTime  }
+            timerState = { this.state      }
           />
         </div>
       </Layout>

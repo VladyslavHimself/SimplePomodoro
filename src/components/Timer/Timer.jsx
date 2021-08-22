@@ -6,7 +6,7 @@ import Controller from './Controller/Controller';
 
 const Timer = props => {
 
-  const { seconds, minutes } = props.time;
+  const { seconds, minutes } = props.timerState;
 
   const nullizeData = (count, minNumber) => {
     if (count <= minNumber) {
@@ -23,7 +23,12 @@ const Timer = props => {
           {nullizeData(minutes, 9)}:{nullizeData(seconds, 9)}
         </span>
       </div>
-      <Controller onChange={ props.onChange }/>
+      <Controller 
+      time = {props.timerState }
+      onChange={ props.onChange }
+      onPause= { props.pauseTime }
+      onRenew= { props.renewTime }
+      />
     </div>
   )
 }
