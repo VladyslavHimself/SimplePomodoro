@@ -6,13 +6,12 @@ import Button from '../../Ui/Button/Button';
 
 const Controller = props => {
 
-  const buttonNameChanger = () => {
+  const buttonNameChanger = (from, to) => {
     if (props.time.isPaused) {
-      return <span>Resume</span>
+      return <span>{from}</span>
     } else {
-      return <span>Pause</span>;
+      return <span>{to}</span>;
     }
-    
   }
 
   const buttonChanger = () => {
@@ -28,7 +27,7 @@ const Controller = props => {
     if (props.time.isTimerStarted) {
       return (
         <>
-          <Button type="additional" onClick={props.onPause}> { buttonNameChanger() }  </Button>
+          <Button type="additional" onClick={props.onPause}> { buttonNameChanger('Resume', 'Continue') }  </Button>
           <Button type="additional" onClick={props.onRenew}> Clear </Button>
         </>
       )
