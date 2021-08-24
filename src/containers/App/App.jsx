@@ -1,12 +1,15 @@
 import React from 'react';
+import { Router } from 'react-router-dom';
 
+// NOTE components
 import classes from './App.module.scss';
 import Layout from '../../hoc/Layout';
-
 import Logo from '../../components/Logo/Logo';
 import Timer from '../../components/Timer/Timer'
 
-export default class App extends React.Component {
+
+
+class App extends React.Component {
   
   state = {
       seconds: 0,
@@ -89,20 +92,21 @@ export default class App extends React.Component {
   }
 
   
-
   render() {
     return (
-      <Layout>
-        <div className={classes.App}>
-          <Logo name='Pomodoro' />
-          <Timer 
-            onChange   = { this.startTimer }
-            renewTime  = { this.renewTime  }
-            pauseTime  = { this.pauseTime  }
-            timerState = { this.state      }
-          />
-        </div>
-      </Layout>
+          <Layout>
+          <div className={classes.App}>
+            <Logo name='Pomodoro' />
+            <Timer 
+              onChange   = { this.startTimer }
+              renewTime  = { this.renewTime  }
+              pauseTime  = { this.pauseTime  }
+              timerState = { this.state      }
+            />
+          </div>
+        </Layout>
     )
   }
 }
+
+export default App;
