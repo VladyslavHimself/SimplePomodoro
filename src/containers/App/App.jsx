@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // NOTE components
 import classes from './App.module.scss';
@@ -91,28 +91,44 @@ class App extends React.Component {
       
   }
 
+  // TODO: Unstack html to components
   
   render() {
     return (
           <Layout>
+
+            
             <div className={classes.App}>
-              <div className={classes.nav}>
-                <div className={classes.nav__wrapper}>
-                  <div className="nav__title">Welcome, TokyoShuffle</div>
-                  <div className={classes.burger}>
-                    <span/>
-                    <span/>
-                    <span/>
+              <Router>
+                <div className={classes.nav}>
+                  <div className={classes.nav__wrapper}>
+                    <div className="nav__title">Welcome, TokyoShuffle</div>
+                    <a href="/settings">
+                      <div className={classes.burger}>
+                        <span/>
+                        <span/>
+                        <span/>
+                      </div>
+                    </a>
+                    
                   </div>
                 </div>
-              </div>
-              <Logo name='Pomodoro' />
-              <Timer 
-                onChange   = { this.startTimer }
-                renewTime  = { this.renewTime  }
-                pauseTime  = { this.pauseTime  }
-                timerState = { this.state      }
-              />
+              </Router>
+              <Route path='/settings' render={ () => <h1>Settings</h1> } />
+              <Route path='/' exact render={
+                () => (
+                  <>
+                    <Logo name='Pomodoro' />
+                    
+                    <Timer 
+                      onChange   = { this.startTimer }
+                      renewTime  = { this.renewTime  }
+                      pauseTime  = { this.pauseTime  }
+                      timerState = { this.state      }
+                    />
+                  </>
+                )
+              }/>
             </div>
         </Layout>
     )
