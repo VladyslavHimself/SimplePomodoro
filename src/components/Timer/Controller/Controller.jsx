@@ -27,7 +27,7 @@ const Controller = props => {
     if (props.time.isTimerStarted) {
       return (
         <>
-          <Button type="additional" onClick={props.onPause}> { buttonNameChanger('Resume', 'Continue') }  </Button>
+          <Button type="additional" onClick={props.onPause}> { buttonNameChanger('Resume', 'Pause') }  </Button>
           <Button type="additional" onClick={props.onRenew}> Clear </Button>
         </>
       )
