@@ -95,15 +95,25 @@ class App extends React.Component {
   render() {
     return (
           <Layout>
-          <div className={classes.App}>
-            <Logo name='Pomodoro' />
-            <Timer 
-              onChange   = { this.startTimer }
-              renewTime  = { this.renewTime  }
-              pauseTime  = { this.pauseTime  }
-              timerState = { this.state      }
-            />
-          </div>
+            <div className={classes.App}>
+              <div className={classes.nav}>
+                <div className={classes.nav__wrapper}>
+                  <div className="nav__title">Welcome, TokyoShuffle</div>
+                  <div className={classes.burger}>
+                    <span/>
+                    <span/>
+                    <span/>
+                  </div>
+                </div>
+              </div>
+              <Logo name='Pomodoro' />
+              <Timer 
+                onChange   = { this.startTimer }
+                renewTime  = { this.renewTime  }
+                pauseTime  = { this.pauseTime  }
+                timerState = { this.state      }
+              />
+            </div>
         </Layout>
     )
   }
