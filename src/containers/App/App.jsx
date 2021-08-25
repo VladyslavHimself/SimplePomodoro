@@ -8,7 +8,7 @@ import Logo from '../../components/Logo/Logo';
 import Timer from '../../components/Timer/Timer';
 import Settings from '../../components/Settings/Settings';
 import Navigation from '../../components/Navigation/Navigation';
-
+import NotFound from '../../components/NotFound/NotFound';
 
 class App extends React.Component {
   
@@ -119,7 +119,7 @@ class App extends React.Component {
                 }/>
 
                 <Route path='/settings' exact component={Settings} />
-
+                <Route component={NotFound} />
                 </Switch>
 
               

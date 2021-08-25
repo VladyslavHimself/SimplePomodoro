@@ -1,0 +1,51 @@
+.NotFound {
+
+  display: flex;
+  flex-direction: column;
+  
+  &__title {
+    display: flex;
+    margin-left: 20px;
+  }
+
+  &__desc {
+    padding: 0 20px;
+  }
+
+  hr {
+    border: none;
+    background-color: #f4f4f4;
+    padding: 2px 4rem;
+    margin: 10px 0;
+  }
+
+  &__button {
+    
+    position: relative;
+    margin-top: 15px;
+    width: 250px;
+
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    color: #fff !important;
+    
+    * {
+      text-decoration: none;
+    }
+  }
+
+
+}
+
+@media(max-width:390px) {
+  .NotFound {
+
+
+    &__desc {
+      font-size: 14px;
+      padding: 0 10px;
+    }
+  }
+}
