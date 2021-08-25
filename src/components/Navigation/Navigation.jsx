@@ -10,32 +10,31 @@ export default function Navigation(props) {
   
   const { isNavOpen } = props
 
-
-  const changeBurger = () => {
-    if (isNavOpen) {
-      console.log('Open');
-      return (
-        <span />
-      )
-    } else {
-      console.log('closed');
-      return (
-        <React.Fragment>
-          <span />
-          <span />
-          <span />
-        </React.Fragment>
-      )
-    }
-  }
-
   return (
     <div className={classes.Nav}>
     <div className={classes.Nav__wrapper}>
       <div className="nav__title">Welcome, TokyoShuffle</div>
       <NavLink to={'/settings'}>
-        <div className={classes.Burger}>
-          {changeBurger()}
+        <div className={classes.Burger}
+             onClick={props.buttonSwitcher}
+        >
+          { props.isNavOpen 
+            ?
+            <NavLink to='/'>
+              <div className={classes.lines}>
+                <span />
+              </div>
+            </NavLink>
+
+            :
+              <NavLink to='/settings'>
+                <div className={classes.lines}>
+                  <span />  
+                  <span />
+                  <span />
+                </div>
+              </NavLink>
+          }
         </div>
       </NavLink>
     </div>

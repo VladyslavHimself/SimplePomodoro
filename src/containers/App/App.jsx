@@ -55,6 +55,20 @@ class App extends React.Component {
     })
   }
 
+  buttonSwitcher = () => {
+    if (this.state.isNavigationToggle) {
+
+      this.setState({
+        isNavigationToggle: false
+      })
+    } else {
+
+      this.setState({
+        isNavigationToggle: true
+      })
+    }
+  }
+
   startTimer = () => {
 
     console.log('timer started')
@@ -100,7 +114,10 @@ class App extends React.Component {
     return (
           <Layout>
             <div className={classes.App}>
-                <Navigation isNavOpen={this.state.isNavigationToggle}/>
+                <Navigation 
+                  buttonSwitcher = { this.buttonSwitcher }
+                  isNavOpen={this.state.isNavigationToggle}
+                  />
 
                 <Switch>
                 <Route path='/' exact render={
