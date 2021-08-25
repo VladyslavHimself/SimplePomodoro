@@ -1,0 +1,38 @@
+
+.Nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: rgba(0, 0, 0, .1);
+
+  display: flex;
+  justify-content: center;
+
+  &__wrapper {
+    width: 95%;
+    height: inherit;
+    // border: 1px solid black;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+  }
+}
+
+.Burger {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  
+  cursor: pointer;
+
+  span {
+    border: 1px solid #f4f4f4;
+  }
+}

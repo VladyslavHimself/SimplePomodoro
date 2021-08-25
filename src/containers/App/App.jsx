@@ -1,12 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom';
 
 // NOTE components
 import classes from './App.module.scss';
 import Layout from '../../hoc/Layout';
 import Logo from '../../components/Logo/Logo';
-import Timer from '../../components/Timer/Timer'
-
+import Timer from '../../components/Timer/Timer';
+import Settings from '../../components/Settings/Settings';
+import Navigation from '../../components/Navigation/Navigation';
 
 
 class App extends React.Component {
@@ -16,7 +17,8 @@ class App extends React.Component {
       minutes: 20,
       isPaused: false, // true/false if clicked on pause button
       isTimerStarted: false, // true, when click on 'Start timer' button
-      isTimerRenewed: false, 
+      isTimerRenewed: false,
+      isNavigationToggle: false,
   }
 
   isTimerFinished = (minutes, seconds) => {
@@ -94,28 +96,14 @@ class App extends React.Component {
   // TODO: Unstack html to components
   
   render() {
+    console.log(this.state.isNavigationToggle)
     return (
           <Layout>
-
-            
             <div className={classes.App}>
-              <Router>
-                <div className={classes.nav}>
-                  <div className={classes.nav__wrapper}>
-                    <div className="nav__title">Welcome, TokyoShuffle</div>
-                    <a href="/settings">
-                      <div className={classes.burger}>
-                        <span/>
-                        <span/>
-                        <span/>
-                      </div>
-                    </a>
-                    
-                  </div>
-                </div>
-              </Router>
-              <Route path='/settings' render={ () => <h1>Settings</h1> } />
-              <Route path='/' exact render={
+                <Navigation isNavOpen={this.state.isNavigationToggle}/>
+
+                <Switch>
+                <Route path='/' exact render={
                 () => (
                   <>
                     <Logo name='Pomodoro' />
@@ -128,7 +116,16 @@ class App extends React.Component {
                     />
                   </>
                 )
-              }/>
+                }/>
+
+                <Route path='/settings' exact component={Settings} />
+
+                </Switch>
+
+              
+              
+              
+
             </div>
         </Layout>
     )
