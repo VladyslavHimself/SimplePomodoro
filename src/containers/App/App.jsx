@@ -1,19 +1,24 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom';
 
+// NOTE components
 import classes from './App.module.scss';
 import Layout from '../../hoc/Layout';
-
 import Logo from '../../components/Logo/Logo';
-import Timer from '../../components/Timer/Timer'
+import Timer from '../../components/Timer/Timer';
+import Settings from '../../components/Settings/Settings';
+import Navigation from '../../components/Navigation/Navigation';
+import NotFound from '../../components/NotFound/NotFound';
 
-export default class App extends React.Component {
+class App extends React.Component {
   
   state = {
       seconds: 0,
       minutes: 20,
       isPaused: false, // true/false if clicked on pause button
       isTimerStarted: false, // true, when click on 'Start timer' button
-      isTimerRenewed: false, 
+      isTimerRenewed: false,
+      isNavigationToggle: false,
   }
 
   isTimerFinished = (minutes, seconds) => {
@@ -88,21 +93,43 @@ export default class App extends React.Component {
       
   }
 
+  // TODO: Unstack html to components
   
-
   render() {
+    console.log(this.state.isNavigationToggle)
     return (
-      <Layout>
-        <div className={classes.App}>
-          <Logo name='Pomodoro' />
-          <Timer 
-            onChange   = { this.startTimer }
-            renewTime  = { this.renewTime  }
-            pauseTime  = { this.pauseTime  }
-            timerState = { this.state      }
-          />
-        </div>
-      </Layout>
+          <Layout>
+            <div className={classes.App}>
+                <Navigation isNavOpen={this.state.isNavigationToggle}/>
+
+                <Switch>
+                <Route path='/' exact render={
+                () => (
+                  <>
+                    <Logo name='Pomodoro' />
+                    
+                    <Timer 
+                      onChange   = { this.startTimer }
+                      renewTime  = { this.renewTime  }
+                      pauseTime  = { this.pauseTime  }
+                      timerState = { this.state      }
+                    />
+                  </>
+                )
+                }/>
+
+                <Route path='/settings' exact component={Settings} />
+                <Route component={NotFound} />
+                </Switch>
+
+              
+              
+              
+
+            </div>
+        </Layout>
     )
   }
 }
+
+export default App;
