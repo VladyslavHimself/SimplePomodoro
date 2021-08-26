@@ -1,7 +1,7 @@
 import React from 'react';
 
 import classes from './Settings.module.scss';
-
+import Button from '../Ui/Button/Button'
 
   /**
    * 
@@ -18,6 +18,18 @@ import classes from './Settings.module.scss';
 
 export default function Settings(props) {
   return (
-    <h1>Settings</h1>
+    <div className={classes.Settings}>
+        <div className={classes.Form}>
+          <div className={classes.Form__title}>
+            Focus time:
+          </div>
+          <div className={classes.Form__field}>
+            <input type="text" placeholder='Focus. default:20'/>
+            <input type="text" placeholder='Pause. default:5'/>
+            <Button type='general'>Accept</Button>
+          </div>
+        </div>
+
+    </div>
   )
 }
