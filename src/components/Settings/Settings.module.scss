@@ -1,0 +1,51 @@
+.Settings {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  width: 320px;
+  max-height: 400px;
+
+  background-color: rgba(0, 0, 0, .07);
+  box-shadow: 1px 1px 20px 8px rgba(0,0,0,0.28);
+  border-radius: 10px;
+
+}
+
+.Form {
+
+  padding: 50px 0;
+
+  &__title {
+    margin-bottom: 15px;
+  }
+
+  &__field {
+
+    display: flex;
+    flex-direction: column;
+    input {
+      padding: 3px 10px;
+      text-align: center;
+      outline: none;
+      margin-bottom: 10px;
+      border: none;
+      color: #fff;
+
+    }
+
+    input[type="text"] {
+      padding: 5px 10px;
+      border-radius: 3px;
+      background: rgba(0,0,0, .5);
+
+      &::placeholder {
+        color: #fff;
+        opacity: .5;
+      }
+    }
+
+  }
+}
