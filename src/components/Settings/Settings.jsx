@@ -1,7 +1,7 @@
 import React from 'react';
 
 import classes from './Settings.module.scss';
-import Button from '../Ui/Button/Button'
+import Form from '../Form/Form';
 
   /**
    * 
@@ -11,7 +11,7 @@ import Button from '../Ui/Button/Button'
    * @Must_Consists
    * 
    * @Configurations 
-   * TODO: Focus time / Pause Time (short / long) changer, 
+   * TODO: discompose render to components
    *
    * 
    */
@@ -19,17 +19,7 @@ import Button from '../Ui/Button/Button'
 export default function Settings(props) {
   return (
     <div className={classes.Settings}>
-        <div className={classes.Form}>
-          <div className={classes.Form__title}>
-            Focus time:
-          </div>
-          <div className={classes.Form__field}>
-            <input type="text" placeholder='Focus. default:20'/>
-            <input type="text" placeholder='Pause. default:5'/>
-            <Button type='general'>Accept</Button>
-          </div>
-        </div>
-
+        <Form />
     </div>
   )
 }
