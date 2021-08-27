@@ -10,15 +10,47 @@ import Settings from '../../components/Settings/Settings';
 import Navigation from '../../components/Navigation/Navigation';
 import NotFound from '../../components/NotFound/NotFound';
 
+import axios from 'axios';
 class App extends React.Component {
   
   state = {
       seconds: 0,
-      minutes: 20,
+      minutes: 25,
       isPaused: false, // true/false if clicked on pause button
       isTimerStarted: false, // true, when click on 'Start timer' button
       isTimerRenewed: false,
       isNavigationToggle: false,
+  }
+
+  getTimeFromServer = async (type) => {
+
+    // !!! OCP Principle violation!
+    try {
+      const response = await axios.get('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
+      console.log(response.data);
+
+      if (type === 'focusTime') {
+        return response.data.focusTime;
+
+      } else if (type === 'breakTime')
+        return response.data.breakTime;
+
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      const timeData = await this.getTimeFromServer('focusTime');
+      this.setState({
+        minutes: timeData
+      });
+
+    } catch (err) {
+      console.log(err);
+    }
+    
   }
 
   isTimerFinished = (minutes, seconds) => {
@@ -45,10 +77,13 @@ class App extends React.Component {
     })
   }
 
-  renewTime = () => {
+  renewTime = async () => {
+
+    const timerData = await this.getTimeFromServer('focusTime');
+
     this.setState({
       seconds: 0,
-      minutes: 20,
+      minutes: timerData,
       isPaused: false,
       isTimerStarted: false,
       isTimerRenewed: true,
@@ -70,8 +105,6 @@ class App extends React.Component {
   }
 
   startTimer = () => {
-
-    console.log('timer started')
     this.setState({
       isTimerStarted: true,
     });
@@ -80,7 +113,7 @@ class App extends React.Component {
         const { seconds, minutes } = this.state;
 
          if (this.state.isTimerRenewed) {
-            console.log('renewed');
+
            this.setState({
              isTimerRenewed: false,
            })
@@ -110,7 +143,6 @@ class App extends React.Component {
   // TODO: Unstack html to components
   
   render() {
-    console.log(this.state.isNavigationToggle)
     return (
           <Layout>
             <div className={classes.App}>
