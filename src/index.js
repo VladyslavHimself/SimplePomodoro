@@ -4,7 +4,6 @@ import reportWebVitals from './reportWebVitals';
 import App from './containers/App/App';
 import { BrowserRouter } from 'react-router-dom';
 
-
 const app = (
   <BrowserRouter>
     <App />
@@ -12,5 +11,4 @@ const app = (
 )
 
 ReactDOM.render(app, document.getElementById('root'));
-
 reportWebVitals();

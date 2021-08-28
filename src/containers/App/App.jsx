@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 // NOTE components
 import classes from './App.module.scss';
@@ -27,7 +27,6 @@ class App extends React.Component {
     // !!! OCP Principle violation!
     try {
       const response = await axios.get('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
-      console.log(response.data);
 
       if (type === 'focusTime') {
         return response.data.focusTime;
@@ -36,7 +35,7 @@ class App extends React.Component {
         return response.data.breakTime;
 
     } catch (err) {
-      throw new Error(err);
+      return 25;
     }
   }
 
