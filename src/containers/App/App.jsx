@@ -11,8 +11,13 @@ import Navigation from '../../components/Navigation/Navigation';
 import NotFound from '../../components/NotFound/NotFound';
 
 import axios from 'axios';
+
+import ServerController from '../../services/ServerController/ServerController';
+
 class App extends React.Component {
   
+  server = new ServerController('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
+
   state = {
       seconds: 0,
       minutes: 25,
@@ -22,34 +27,19 @@ class App extends React.Component {
       isNavigationToggle: false,
   }
 
-  getTimeFromServer = async (type) => {
-
-    // !!! OCP Principle violation!
-    try {
-      const response = await axios.get('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
-
-      if (type === 'focusTime') {
-        return response.data.focusTime;
-
-      } else if (type === 'breakTime')
-        return response.data.breakTime;
-
-    } catch (err) {
-      return 25;
-    }
-  }
-
   async componentDidMount() {
-    try {
-      const timeData = await this.getTimeFromServer('focusTime');
-      this.setState({
-        minutes: timeData
-      });
 
-    } catch (err) {
-      console.log(err);
+    let data = await this.server.getFocusTime();
+
+    if (data) {
+      this.setState({
+        minutes: data,
+      })
+    } else {
+      this.setState({
+        minutes: 25,
+      })
     }
-    
   }
 
   isTimerFinished = (minutes, seconds) => {
@@ -140,7 +130,7 @@ class App extends React.Component {
   }
 
   // TODO: Unstack html to components
-  
+
   render() {
     return (
           <Layout>
