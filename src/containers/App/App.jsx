@@ -12,25 +12,26 @@ import NotFound from '../../components/NotFound/NotFound';
 
 // logic modules
 import ServerController from '../../services/ServerController/ServerController';
-import {Timer as TimerClass} from '../../services/Timer/Timer';
+import Timerr from '../../services/Timer/Timer';
 
 class App extends React.Component {
   
-  server = new ServerController('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
-
   state = {
-      seconds: 0,
-      minutes: 25,
-      isPaused: false, // true/false if clicked on pause button
-      isTimerStarted: false, // true, when click on 'Start timer' button
-      isTimerRenewed: false,
-      isNavigationToggle: false,
-  };
+    seconds: 0,
+    minutes: 25,
+    isPaused: false, // true/false if clicked on pause button
+    isTimerStarted: false, // true, when click on 'Start timer' button
+    isTimerRenewed: false,
+    isNavigationToggle: false,
+};
+
+  Server = new ServerController('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
+  Timer = new Timerr(this.state.minutes, this.state.seconds);
 
   // timeModule = new TimeController(this.state.minutes, this.state.seconds);
 
   async componentDidMount() {
-    let serverResponse = await this.server.getFocusTime();
+    let serverResponse = await this.Server.getFocusTime();
     serverResponse ? this.setState({ minutes: serverResponse}) : this.setState({ minutes: this.state.minutes});
   }
 
@@ -60,7 +61,7 @@ class App extends React.Component {
 
   renewTime = async () => {
 
-    let serverResponse = await this.server.getFocusTime();
+    let serverResponse = await this.Server.getFocusTime();
     serverResponse 
     ? this.setState({
       seconds: 0,
@@ -78,6 +79,7 @@ class App extends React.Component {
     })
   }
 
+  
 
   startTimer = () => {
     this.setState({
@@ -108,9 +110,14 @@ class App extends React.Component {
           return;
         }
 
-        // NOTE start timer ticking
-        this.timerTicking(minutes, seconds);
-  
+        // @tick 
+        const timeData = this.Timer.tick(this.state.minutes, this.state.seconds);
+      
+        this.setState({
+          minutes: timeData.minutes,
+          seconds: timeData.seconds,
+        });
+
       }, 1000);
       
   }

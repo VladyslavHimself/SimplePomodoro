@@ -6,6 +6,17 @@ class Timer {
   }
 
   tick = (minutes, seconds) => {
+    if (seconds <= 0) {
+      return {
+        seconds: 59,
+        minutes: minutes - 1
+      }
+    } else {
+      return {
+        seconds: seconds - 1,
+        minutes: minutes,
+      }
+    }
   }
 }
 
