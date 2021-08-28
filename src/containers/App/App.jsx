@@ -10,9 +10,9 @@ import Settings from '../../components/Settings/Settings';
 import Navigation from '../../components/Navigation/Navigation';
 import NotFound from '../../components/NotFound/NotFound';
 
-import axios from 'axios';
-
+// logic modules
 import ServerController from '../../services/ServerController/ServerController';
+import {Timer as TimerClass} from '../../services/Timer/Timer';
 
 class App extends React.Component {
   
@@ -20,16 +20,18 @@ class App extends React.Component {
 
   state = {
       seconds: 0,
-      minutes: 30,
+      minutes: 25,
       isPaused: false, // true/false if clicked on pause button
       isTimerStarted: false, // true, when click on 'Start timer' button
       isTimerRenewed: false,
       isNavigationToggle: false,
-  }
+  };
+
+  // timeModule = new TimeController(this.state.minutes, this.state.seconds);
 
   async componentDidMount() {
     let serverResponse = await this.server.getFocusTime();
-    serverResponse ? this.setState({ minutes: serverResponse}) : this.setState({ minutes: 25});
+    serverResponse ? this.setState({ minutes: serverResponse}) : this.setState({ minutes: this.state.minutes});
   }
 
   isTimerFinished = (minutes, seconds) => {
@@ -53,7 +55,7 @@ class App extends React.Component {
   pauseTime = () => {
     this.setState({
       isPaused: !this.state.isPaused,
-    })
+    });
   }
 
   renewTime = async () => {
@@ -76,19 +78,6 @@ class App extends React.Component {
     })
   }
 
-  buttonSwitcher = () => {
-    if (this.state.isNavigationToggle) {
-
-      this.setState({
-        isNavigationToggle: false
-      })
-    } else {
-
-      this.setState({
-        isNavigationToggle: true
-      })
-    }
-  }
 
   startTimer = () => {
     this.setState({
@@ -124,6 +113,21 @@ class App extends React.Component {
   
       }, 1000);
       
+  }
+
+
+  buttonSwitcher = () => {
+    if (this.state.isNavigationToggle) {
+
+      this.setState({
+        isNavigationToggle: false
+      })
+    } else {
+
+      this.setState({
+        isNavigationToggle: true
+      })
+    }
   }
 
   // TODO: Unstack html to components

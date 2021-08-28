@@ -7,21 +7,23 @@ class ServerController {
   }
 
   getFocusTime = async (url) => {
-    try {
-      const response = await axios.get(url);
 
+    try {
+      const response = await axios.get(this.url);
       return response.data.focusTime;
-    } catch (err) {
+    } catch (error) {
+      console.error('Data cannot be received from the server...');
       return false;
     }
-  }
+    }
 
   getBreakTime = async (url) => {
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(this.url);
       return response.data.breakTime;
     } catch (err) {
-      throw new Error(err);
+      console.error('Data cannot be received from the server...');
+      return false;
     }
   }
 };
