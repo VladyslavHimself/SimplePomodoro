@@ -28,18 +28,8 @@ class App extends React.Component {
   }
 
   async componentDidMount() {
-
-    let data = await this.server.getFocusTime();
-
-    if (data) {
-      this.setState({
-        minutes: data,
-      })
-    } else {
-      this.setState({
-        minutes: 25,
-      })
-    }
+    let serverResponse = await this.server.getFocusTime();
+    serverResponse ? this.setState({ minutes: serverResponse}) : this.setState({ minutes: 25});
   }
 
   isTimerFinished = (minutes, seconds) => {
