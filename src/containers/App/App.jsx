@@ -20,7 +20,7 @@ class App extends React.Component {
 
   state = {
       seconds: 0,
-      minutes: 25,
+      minutes: 30,
       isPaused: false, // true/false if clicked on pause button
       isTimerStarted: false, // true, when click on 'Start timer' button
       isTimerRenewed: false,
@@ -58,11 +58,18 @@ class App extends React.Component {
 
   renewTime = async () => {
 
-    const timerData = await this.getTimeFromServer('focusTime');
-
-    this.setState({
+    let serverResponse = await this.server.getFocusTime();
+    serverResponse 
+    ? this.setState({
       seconds: 0,
-      minutes: timerData,
+      minutes: serverResponse,
+      isPaused: false,
+      isTimerStarted: false,
+      isTimerRenewed: true,
+    })
+    : this.setState({
+      seconds: 0,
+      minutes: 25,
       isPaused: false,
       isTimerStarted: false,
       isTimerRenewed: true,
@@ -149,11 +156,6 @@ class App extends React.Component {
                 <Route path='/settings' exact component={Settings} />
                 <Route component={NotFound} />
                 </Switch>
-
-              
-              
-              
-
             </div>
         </Layout>
     )

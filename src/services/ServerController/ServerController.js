@@ -19,7 +19,6 @@ class ServerController {
   getBreakTime = async (url) => {
     try {
       const response = await axios.get(url);
-
       return response.data.breakTime;
     } catch (err) {
       throw new Error(err);
