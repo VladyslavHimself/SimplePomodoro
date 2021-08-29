@@ -32,7 +32,8 @@ class App extends React.Component {
     let serverResponse = await this.Server.getFocusTime();
     serverResponse ? this.setState({ minutes: serverResponse}) : this.setState({ minutes: this.state.minutes});
   }
-  
+  // TODO: Compose methods to abstract Time class
+
   pauseTime = () => {
     this.setState({
       isPaused: !this.state.isPaused,
@@ -58,8 +59,6 @@ class App extends React.Component {
       isTimerRenewed: true,
     })
   }
-
-  
 
   startTimer = () => {
     this.setState({
@@ -102,10 +101,8 @@ class App extends React.Component {
       
   }
 
-
   buttonSwitcher = () => {
     if (this.state.isNavigationToggle) {
-
       this.setState({
         isNavigationToggle: false
       })
@@ -116,39 +113,37 @@ class App extends React.Component {
       })
     }
   }
-
-  // TODO: Unstack html to components
-
+  
   render() {
     return (
-          <Layout>
-            <div className={classes.App}>
-                <Navigation 
-                  buttonSwitcher = { this.buttonSwitcher }
-                  isNavOpen={this.state.isNavigationToggle}
+      <Layout>
+        <div className={classes.App}>
+          <Navigation 
+            buttonSwitcher = { this.buttonSwitcher }
+            isNavOpen={this.state.isNavigationToggle}
+            />
+
+          <Switch>
+            <Route path='/' exact render={
+              () => (
+                <>
+                  <Logo name='Pomodoro' />
+                  
+                  <Timer 
+                    onChange   = { this.startTimer }
+                    renewTime  = { this.renewTime  }
+                    pauseTime  = { this.pauseTime  }
+                    timerState = { this.state      }
                   />
+                </>
+              )
+            }/>
 
-                <Switch>
-                <Route path='/' exact render={
-                () => (
-                  <>
-                    <Logo name='Pomodoro' />
-                    
-                    <Timer 
-                      onChange   = { this.startTimer }
-                      renewTime  = { this.renewTime  }
-                      pauseTime  = { this.pauseTime  }
-                      timerState = { this.state      }
-                    />
-                  </>
-                )
-                }/>
-
-                <Route path='/settings' exact component={Settings} />
-                <Route component={NotFound} />
-                </Switch>
-            </div>
-        </Layout>
+            <Route path='/settings' exact component={Settings} />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+      </Layout>
     )
   }
 }
