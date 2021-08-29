@@ -23,7 +23,7 @@ class Timer {
     console.log(minutes, seconds)
     if (minutes === 0 && seconds === 0) return true;
   }
-
+  
 
 }
 

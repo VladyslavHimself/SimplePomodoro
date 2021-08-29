@@ -16,37 +16,42 @@ import Timerr from '../../services/Timer/Timer';
 
 class App extends React.Component {
   
+  DATABASE_URL = 'https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json';
+
   state = {
-    seconds: 0,
-    minutes: 25,
+    seconds: 1,
+    minutes: 0,
     isPaused: false, // true/false if clicked on pause button
+    isFocusEnd: false,
     isTimerStarted: false, // true, when click on 'Start timer' button
     isTimerRenewed: false,
     isNavigationToggle: false,
 };
 
-  Server = new ServerController('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
+  Server = new ServerController(this.DATABASE_URL);
   Timer = new Timerr(this.state.minutes, this.state.seconds);
 
   async componentDidMount() {
     let serverResponse = await this.Server.getFocusTime();
-    serverResponse ? this.setState({ minutes: serverResponse}) : this.setState({ minutes: this.state.minutes});
+    serverResponse ? this.setState({ minutes: serverResponse }) : this.setState({ minutes: this.state.minutes });
   }
-  // TODO: Compose methods to abstract Time class
 
+  // TODO: Compose methods to abstract Time class
   pauseTime = () => {
     this.setState({
       isPaused: !this.state.isPaused,
     });
   }
 
+  // make function more valiability
   renewTime = async () => {
 
-    let serverResponse = await this.Server.getFocusTime();
-    serverResponse 
+    let focusTimeFromServer = await this.Server.getFocusTime();
+
+    focusTimeFromServer 
     ? this.setState({
       seconds: 0,
-      minutes: serverResponse,
+      minutes: focusTimeFromServer,
       isPaused: false,
       isTimerStarted: false,
       isTimerRenewed: true,
@@ -60,16 +65,45 @@ class App extends React.Component {
     })
   }
 
+  startBreak = async () => {
+    let breakTimeFromServer = await this.Server.getBreakTime();
+    
+    // * 1. Change time to break; +
+    // * 2. change UI to break;
+
+    if (breakTimeFromServer) {
+      this.setState({
+        isFocusEnd: true,
+        minutes: breakTimeFromServer,
+      });  
+    } else {
+      this.setState({
+        isFocusEnd: true,
+        minutes: 1,
+        isPaused: false,
+        isTimerStarted: false,
+        isTimerRenewed: true,
+        
+      });
+
+
+    }
+  }
+
   startTimer = () => {
+
+    // ? Check if timer is already running
     this.setState({
       isTimerStarted: true,
     });
 
+    // TODO: 1.Fix bug with break time button;
+    // * 2. Make this function more easier;
+    
       let timer = setInterval(() => {
         const { seconds, minutes } = this.state;
 
          if (this.state.isTimerRenewed) {
-
            this.setState({
              isTimerRenewed: false,
            })
@@ -78,14 +112,23 @@ class App extends React.Component {
           //  return;
          }
         
-        // NOTE if timer paused - don't tick!
+        // ? if timer paused - don't tick!
         if (this.state.isPaused) return;
 
-        // NOTE Check if timer is not End;
+        // ? Check if timer is not End;
         if (this.Timer.isFinished(this.state.minutes, this.state.seconds)) {
           this.pauseTime();
+          
+          if (!this.state.isFocusEnd) {
+            this.startBreak();
+            this.setState({
+              isFocusEnd: false,
+            });
+          } else {
+            this.renewTime();
+          }
           window.alert('Timer is done, you\'re great!');
-          this.renewTime();
+
           return;
         }
 

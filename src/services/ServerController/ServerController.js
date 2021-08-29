@@ -25,7 +25,7 @@ class ServerController {
       console.error('Data cannot be received from the server...');
       return false;
     }
-  }
+    }
 };
 
 export default ServerController;

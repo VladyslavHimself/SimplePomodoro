@@ -16,13 +16,27 @@ const Controller = props => {
 
   const buttonChanger = () => {
     if (!props.time.isTimerStarted) {
-      return (
-        <>
-        <Button type='general' onClick={props.onChange}>
-          Start work!
-        </Button>
-        </>
-      )
+      console.log(props);
+      if (props.time.isFocusEnd) {
+        return (
+          <>
+          <Button type='general' onClick={props.onChange}>
+            Drink Coffee!
+          </Button>
+          </>
+        )
+
+      }
+
+      else {
+        return (
+          <>
+          <Button type='general' onClick={props.onChange}>
+            Start work!
+          </Button>
+          </>
+        )
+      }
     } 
     if (props.time.isTimerStarted) {
       return (
