@@ -18,21 +18,13 @@ class Timer {
       }
     }
   }
+
+  isFinished = (minutes, seconds) => {
+    console.log(minutes, seconds)
+    if (minutes === 0 && seconds === 0) return true;
+  }
+
+
 }
 
 export default Timer;
-
-
-// timerTicking = (minutes, seconds) => {
-//   if (seconds <= 0) {
-//     this.setState({
-//       seconds: 59,
-//       minutes: minutes - 1,
-//     });
-//   } else {
-//     this.setState({
-//         seconds: seconds - 1,
-//         minutes: minutes,
-//     });
-//   }
-// }

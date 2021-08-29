@@ -28,31 +28,11 @@ class App extends React.Component {
   Server = new ServerController('https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json');
   Timer = new Timerr(this.state.minutes, this.state.seconds);
 
-  // timeModule = new TimeController(this.state.minutes, this.state.seconds);
-
   async componentDidMount() {
     let serverResponse = await this.Server.getFocusTime();
     serverResponse ? this.setState({ minutes: serverResponse}) : this.setState({ minutes: this.state.minutes});
   }
-
-  isTimerFinished = (minutes, seconds) => {
-    if (minutes === 0 && seconds === 0) return true;
-  }
-  // updates seconds & minutes
-  timerTicking = (minutes, seconds) => {
-    if (seconds <= 0) {
-      this.setState({
-        seconds: 59,
-        minutes: minutes - 1,
-      });
-    } else {
-      this.setState({
-          seconds: seconds - 1,
-          minutes: minutes,
-      });
-    }
-  }
-
+  
   pauseTime = () => {
     this.setState({
       isPaused: !this.state.isPaused,
@@ -103,7 +83,7 @@ class App extends React.Component {
         if (this.state.isPaused) return;
 
         // NOTE Check if timer is not End;
-        if (this.isTimerFinished(minutes, seconds)) {
+        if (this.Timer.isFinished(this.state.minutes, this.state.seconds)) {
           this.pauseTime();
           window.alert('Timer is done, you\'re great!');
           this.renewTime();
