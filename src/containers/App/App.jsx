@@ -10,9 +10,8 @@ import Settings from '../../components/Settings/Settings';
 import Navigation from '../../components/Navigation/Navigation';
 import NotFound from '../../components/NotFound/NotFound';
 
-// logic modules
-import ServerController from '../../services/ServerController/ServerController';
-import Timerr from '../../services/Timer/Timer';
+  // TODO: RECONSTRUCT LOGIC WITH LOWER STATEMENTS
+  // ! 
 
 class App extends React.Component {
   
