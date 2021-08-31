@@ -14,6 +14,8 @@ import NotFound from '../../components/NotFound/NotFound';
 import ServerController from '../../services/ServerController/ServerController';
 import Timerr from '../../services/Timer/Timer';
 
+
+// !!! DETACHED HEAD GIT COMMIT FOR SAFE BACKUP
 class App extends React.Component {
   
   DATABASE_URL = 'https://pomodoro-11618-default-rtdb.firebaseio.com/quest.json';
